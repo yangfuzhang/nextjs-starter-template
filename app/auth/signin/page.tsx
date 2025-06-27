@@ -31,10 +31,12 @@ const PROVIDER_ICONS = {
   ),
 };
 
-export default async function SignInPage(props: {
-  searchParams: { callbackUrl: string | undefined };
+export default async function SignInPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ callbackUrl?: string }>;
 }) {
-  const searchParams = await props.searchParams;
+  const { callbackUrl } = await searchParams;
 
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
@@ -62,7 +64,7 @@ export default async function SignInPage(props: {
                 "use server";
                 try {
                   await signIn(provider.id, {
-                    redirectTo: searchParams?.callbackUrl ?? "",
+                    redirectTo: callbackUrl ?? "",
                   });
                 } catch (error) {
                   if (error instanceof AuthError) {
