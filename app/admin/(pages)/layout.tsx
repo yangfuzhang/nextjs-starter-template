@@ -1,7 +1,9 @@
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { getUserInfo } from "@/services/user";
+import { User } from "@/types/user";
 import { AccessDenied } from "@/components/auth/access-denied";
+import { DashboardLayout } from "@/components/layout/dashboard-layout";
 
 export default async function AdminLayout({
   children,
@@ -18,5 +20,5 @@ export default async function AdminLayout({
     return <AccessDenied />;
   }
 
-  return <div>{children}</div>;
+  return <DashboardLayout user={userInfo as User}>{children}</DashboardLayout>;
 }
