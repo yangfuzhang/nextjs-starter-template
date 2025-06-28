@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { routing } from "@/i18n/routing";
 import "@/styles/globals.css";
 
@@ -38,6 +40,10 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        {process.env.VERCEL_ANALYTICS_ENABLED === "true" && <Analytics />}
+        {process.env.VERCEL_SPEED_INSIGHTS_ENABLED === "true" && (
+          <SpeedInsights />
+        )}
       </body>
     </html>
   );
