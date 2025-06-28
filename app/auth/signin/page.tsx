@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { getUserInfo } from "@/services/user";
 
 const SIGNIN_ERROR_URL = "/auth/error";
 const PROVIDER_ICONS = {
@@ -37,6 +38,11 @@ export default async function SignInPage({
   searchParams: Promise<{ callbackUrl?: string }>;
 }) {
   const { callbackUrl } = await searchParams;
+  const userInfo = await getUserInfo();
+
+  if (userInfo?.email) {
+    return redirect("/");
+  }
 
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
