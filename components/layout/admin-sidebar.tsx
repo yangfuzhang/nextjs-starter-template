@@ -1,6 +1,5 @@
 "use client";
-import Link from "next/link";
-import { Atom, Users, ChevronRight } from "lucide-react";
+import { Atom, Users } from "lucide-react";
 import { User } from "@/types/user";
 import {
   Sidebar,
@@ -9,22 +8,25 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import {
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuSub,
-  SidebarMenuButton,
-  SidebarMenuSubButton,
-  SidebarMenuItem,
-  SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
+
+import { AdminSidebarContent } from "./admin-sidebar-content";
 import { AdminSidebarFooter } from "./admin-sidebar-footer";
+
+const menus = [
+  {
+    title: "用户管理",
+    url: "#",
+    icon: Users,
+    isActive: true,
+    items: [
+      {
+        title: "用户列表",
+        url: "/admin/users",
+      },
+    ],
+  },
+];
 
 export function AdminSidebar({
   ...props
@@ -47,33 +49,7 @@ export function AdminSidebar({
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>管理后台</SidebarGroupLabel>
-          <SidebarMenu>
-            <Collapsible asChild defaultOpen className="group/collapsible">
-              <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip="">
-                    <Users size="12" />
-                    <span>用户管理</span>
-                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton asChild>
-                        <Link href="/admin/users">
-                          <span>用户列表</span>
-                        </Link>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  </SidebarMenuSub>
-                </CollapsibleContent>
-              </SidebarMenuItem>
-            </Collapsible>
-          </SidebarMenu>
-        </SidebarGroup>
+        <AdminSidebarContent items={menus} />
       </SidebarContent>
       <SidebarFooter>
         <AdminSidebarFooter user={user} />
