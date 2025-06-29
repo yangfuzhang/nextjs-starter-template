@@ -2,12 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
-export default async function Home() {
-  const t = await getTranslations("home_page");
+export default async function HomePage() {
+  const t = await getTranslations("global");
+  const t_home = await getTranslations("home_page");
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    <div className="flex flex-col items-center justify-center p-8 pt-20 gap-12 font-[family-name:var(--font-geist-sans)]">
+      <main className="flex flex-col gap-8 items-center sm:items-start">
         <Image
           className="dark:invert"
           src="/logo.svg"
@@ -19,12 +20,12 @@ export default async function Home() {
 
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl md:text-5xl">{t("title")}</h1>
-          <p>快速搭建Nextjs项目</p>
+          <p>{t("subtitle")}</p>
         </div>
 
-        <div>
-          <h2 className="font-medium">技术栈</h2>
-          <ol className="mt-2 list-inside list-decimal font-[family-name:var(--font-geist-mono)]">
+        <div className="flex flex-col gap-2 items-start">
+          <h2 className="font-medium">{t_home("tech_stack")}</h2>
+          <ol className="list-inside list-decimal font-[family-name:var(--font-geist-mono)]">
             <li>Nextjs</li>
             <li>Shadcn</li>
             <li>Zustand</li>
@@ -41,7 +42,7 @@ export default async function Home() {
             target="_self"
             rel="noopener noreferrer"
           >
-            管理后台
+            {t_home("dashboard")}
           </Link>
           <Link
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
@@ -49,7 +50,7 @@ export default async function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Nextjs文档
+            {t_home("docs")}
           </Link>
         </div>
       </main>

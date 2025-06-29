@@ -1,5 +1,17 @@
 {
+  "global": {
+    "title": "Starter Template",
+    "subtitle": "Start your nextjs project instantly",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service"
+  },
+  "menu": {
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service"
+  },
   "home_page": {
-    "title": "Starter Template"
+    "tech_stack": "Tech Stack",
+    "dashboard": "Dashboard",
+    "docs": "Nextjs Docs"
   }
 }

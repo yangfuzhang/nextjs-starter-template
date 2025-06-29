@@ -6,6 +6,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { routing } from "@/i18n/routing";
+import { Header } from "./components/header";
 import "@/styles/globals.css";
 
 const geistSans = Geist({
@@ -64,7 +65,12 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <div className="max-w-[1280px] mx-auto">
+            <Header />
+            {children}
+          </div>
+        </NextIntlClientProvider>
         {process.env.VERCEL_ANALYTICS_ENABLED === "true" && <Analytics />}
         {process.env.VERCEL_SPEED_INSIGHTS_ENABLED === "true" && (
           <SpeedInsights />
