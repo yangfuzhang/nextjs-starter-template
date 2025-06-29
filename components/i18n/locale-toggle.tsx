@@ -13,10 +13,11 @@ import {
 import { Button } from "@/components/ui/button";
 
 export function LocaleToggle() {
-  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const pathnameWithoutLocale = pathname.replace(`/${locale}`, "");
+  const locale = useLocale();
+  const localeRegex = new RegExp(`^/${locale}`);
+  const pathnameWithoutLocale = pathname.replace(localeRegex, "");
 
   const handleLocaleChange = (locale: string) => {
     router.replace(`/${locale}${pathnameWithoutLocale}`);
