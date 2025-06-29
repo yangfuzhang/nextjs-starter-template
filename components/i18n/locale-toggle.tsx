@@ -27,16 +27,16 @@ export function LocaleToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm">
-          <Languages size="12" />
+          <Languages size="16" />
           {LOCALE_NAMES[locale as keyof typeof LOCALE_NAMES]}
-          <ChevronDown size="12" />
+          <ChevronDown size="16" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {routing.locales.map((l) => (
           <DropdownMenuItem key={l} onClick={() => handleLocaleChange(l)}>
             {LOCALE_NAMES[l as keyof typeof LOCALE_NAMES]}
-            {l === locale && <Check size="12" />}
+            {l === locale && <Check size="16" />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
