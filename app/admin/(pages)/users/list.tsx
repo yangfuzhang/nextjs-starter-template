@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getAllUsers } from "@/models/user";
+import { getAllUsers } from "@/actions/user";
 
 export async function UserList() {
   const users = await getAllUsers();

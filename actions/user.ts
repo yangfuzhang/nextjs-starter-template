@@ -1,4 +1,4 @@
-import { supabase } from "./db";
+import { supabase } from "@/lib/supabase";
 
 export async function getUserByEmail(email: string) {
   const { data, error } = await supabase
