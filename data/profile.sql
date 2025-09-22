@@ -47,7 +47,7 @@ CREATE TRIGGER on_auth_user_created
 
 
 -- Enable row level security
-alter policy "Enable select for authenticated users only"
+create policy "Enable select for authenticated users only"
 on "public"."profiles"
 to authenticated
 using (
