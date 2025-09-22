@@ -1,10 +1,13 @@
 import { redirect } from "next/navigation";
-import { getUserInfo } from "@/services/user";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function Page() {
-  const userInfo = await getUserInfo();
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!userInfo?.email) return redirect("/auth/signin");
+  if (!user) return redirect("/auth/signin");
 
   return redirect("/admin/users");
 }

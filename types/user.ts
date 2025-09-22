@@ -1,7 +1,1 @@
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified?: Date | null;
-  image: string;
-};
+export type { User } from "@supabase/supabase-js";
