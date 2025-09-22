@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
-import { signIn, providerMap } from "@/auth";
-import { AuthError } from "next-auth";
+import { createClient } from "@/lib/supabase/server";
 import { GalleryVerticalEnd } from "lucide-react";
 import {
   Card,
@@ -10,9 +9,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getUserInfo } from "@/services/user";
 
-const SIGNIN_ERROR_URL = "/auth/error";
+type Provider = "github" | "google";
+const providers: { id: Provider; name: string }[] = [
+  {
+    id: "google",
+    name: "Google",
+  },
+  {
+    id: "github",
+    name: "Github",
+  },
+];
 const PROVIDER_ICONS = {
   google: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -32,22 +40,14 @@ const PROVIDER_ICONS = {
   ),
 };
 
-export default async function SignInPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ callbackUrl?: string }>;
-}) {
-  const { callbackUrl } = await searchParams;
-  const userInfo = await getUserInfo();
-
-  if (userInfo?.email) {
-    return redirect("/");
-  }
-
+export default async function SignInPage() {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <a href="#" className="flex items-center gap-2 self-center font-medium">
+        <a
+          href="#"
+          className="flex items-center gap-2 self-center font-orbitron font-medium"
+        >
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
             <GalleryVerticalEnd className="size-4" />
           </div>
@@ -63,22 +63,22 @@ export default async function SignInPage({
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          {Object.values(providerMap).map((provider) => (
+          {providers.map((provider) => (
             <form
               key={provider.id}
               action={async () => {
                 "use server";
-                try {
-                  await signIn(provider.id, {
-                    redirectTo: callbackUrl ?? "",
-                  });
-                } catch (error) {
-                  if (error instanceof AuthError) {
-                    return redirect(`${SIGNIN_ERROR_URL}?error=${error.type}`);
-                  }
+                const supabase = await createClient();
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                  provider: provider.id,
+                  options: {
+                    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/callback`,
+                  },
+                });
 
-                  throw error;
-                }
+                if (error) throw error;
+
+                redirect(data.url);
               }}
             >
               <Button className="w-full" variant="outline" type="submit">

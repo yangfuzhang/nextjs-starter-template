@@ -1,9 +1,9 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getUserByEmail(email: string) {
+  const supabase = await createClient();
   const { data, error } = await supabase
-    .schema("next_auth")
-    .from("users")
+    .from("profiles")
     .select("*")
     .eq("email", email)
     .single();
@@ -14,19 +14,8 @@ export async function getUserByEmail(email: string) {
 }
 
 export async function getAllUsers() {
-  const { data, error } = await supabase.schema("next_auth").from("users")
-    .select(`
-      id,
-      name,
-      email,
-      emailVerified,
-      image,
-      accounts (
-        id,
-        type,
-        provider
-      )  
-    `);
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("profiles").select("*");
 
   if (error) throw error;
 
