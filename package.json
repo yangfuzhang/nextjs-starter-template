@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "PORT=3001 node .next/standalone/server.js",
     "lint": "next lint"
   },
   "dependencies": {
     "@auth/supabase-adapter": "^1.10.0",
+    "@plaiceholder/next": "^3.0.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-collapsible": "^1.1.11",
     "@radix-ui/react-dialog": "^1.1.14",
@@ -28,8 +29,10 @@
     "next": "15.3.4",
     "next-auth": "5.0.0-beta.29",
     "next-intl": "^4.3.1",
+    "plaiceholder": "^3.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sharp": "^0.34.3",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
