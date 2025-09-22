@@ -30,10 +30,12 @@
     "next": "15.3.4",
     "next-auth": "5.0.0-beta.29",
     "next-intl": "^4.3.1",
+    "nextjs-starter-template": "link:",
     "plaiceholder": "^3.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sharp": "^0.34.3",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

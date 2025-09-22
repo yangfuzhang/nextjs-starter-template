@@ -1,4 +1,5 @@
 "use client";
+import { redirect } from "next/navigation";
 import {
   BadgeCheck,
   Bell,
@@ -6,7 +7,6 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react";
-import { signOut } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -23,7 +23,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { toastError } from "@/lib/toast";
 import { User } from "@/types/user";
+import { createClient } from "@/lib/supabase/client";
 
 export function AdminSidebarFooter({ user }: { user: User }) {
   const { isMobile } = useSidebar();
@@ -38,11 +40,16 @@ export function AdminSidebarFooter({ user }: { user: User }) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.image} alt={user.name} />
+                <AvatarImage
+                  src={user.user_metadata.avatar_url}
+                  alt={user.user_metadata.full_name}
+                />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate font-medium">
+                  {user.user_metadata.full_name}
+                </span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -57,11 +64,16 @@ export function AdminSidebarFooter({ user }: { user: User }) {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.image} alt={user.name} />
+                  <AvatarImage
+                    src={user.user_metadata.avatar_url}
+                    alt={user.user_metadata.full_name}
+                  />
                   <AvatarFallback className="rounded-lg">A</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate font-medium">
+                    {user.user_metadata.full_name}
+                  </span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
@@ -85,7 +97,18 @@ export function AdminSidebarFooter({ user }: { user: User }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => signOut()}>
+            <DropdownMenuItem
+              onClick={async () => {
+                const supabase = createClient();
+                const { error } = await supabase.auth.signOut();
+
+                if (error) {
+                  toastError(error.message);
+                }
+
+                redirect("/auth/signin");
+              }}
+            >
               <LogOut />
               退出登录
             </DropdownMenuItem>
