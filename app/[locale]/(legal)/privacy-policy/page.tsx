@@ -1,7 +1,7 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export default function Page() {
-  const t = useTranslations("global");
+export default async function Page() {
+  const t = await getTranslations("global");
 
   return (
     <div className="w-full flex flex-col items-center">
