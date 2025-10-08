@@ -1,0 +1,57 @@
+.EasyMDEContainer h1 {
+  margin: 24px 0;
+  font-size: 36px;
+  font-weight: 500;
+  color: #000;
+}
+
+.EasyMDEContainer h2 {
+  margin: 20px 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: #000;
+}
+
+.EasyMDEContainer h3 {
+  margin: 16px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+.EasyMDEContainer p { 
+  margin: 16px 0;
+  color: #333;
+}
+
+.EasyMDEContainer ul { 
+  margin: 16px 0;
+  margin-left: 20px;
+  color: #333;
+}
+
+.EasyMDEContainer ol { 
+  margin: 16px 0;
+  margin-left: 20px;
+  color: #333;
+}
+
+.EasyMDEContainer a { 
+  color: oklch(0.6559 0.2118 354.308);
+  text-decoration: underline;
+}
+
+.EasyMDEContainer strong { 
+  font-weight: bold;
+  color: oklch(0.6559 0.2118 354.308);
+}
+
+.EasyMDEContainer blockquote {
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+.EasyMDEContainer blockquote p {
+  margin: 0;
+}
