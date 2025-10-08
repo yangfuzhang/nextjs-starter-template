@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ReactQueryProvider } from "@/components/providers/react-query-provider";
 import "@/styles/globals.css";
 
 const geistSans = Geist({
@@ -25,15 +28,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh">
+    <html lang="zh" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        {process.env.VERCEL_ANALYTICS_ENABLED === "true" && <Analytics />}
-        {process.env.VERCEL_SPEED_INSIGHTS_ENABLED === "true" && (
-          <SpeedInsights />
-        )}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ReactQueryProvider>
+            {children}
+            <Toaster />
+          </ReactQueryProvider>
+          {process.env.VERCEL_ANALYTICS_ENABLED === "true" && <Analytics />}
+          {process.env.VERCEL_SPEED_INSIGHTS_ENABLED === "true" && (
+            <SpeedInsights />
+          )}
+        </ThemeProvider>
       </body>
     </html>
   );

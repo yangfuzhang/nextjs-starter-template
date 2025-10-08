@@ -1,5 +1,5 @@
 "use client";
-import { Atom, Users } from "lucide-react";
+import { Atom, Users, Rss } from "lucide-react";
 import { User } from "@/types/user";
 import {
   Sidebar,
@@ -23,6 +23,18 @@ const menus = [
       {
         title: "用户列表",
         url: "/admin/users",
+      },
+    ],
+  },
+  {
+    title: "文章管理",
+    url: "#",
+    icon: Rss,
+    isActive: false,
+    items: [
+      {
+        title: "文章列表",
+        url: "/admin/posts",
       },
     ],
   },
