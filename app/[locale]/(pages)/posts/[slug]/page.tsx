@@ -58,7 +58,7 @@ export default async function Page(props: {
   }
 
   return (
-    <div className="w-[800px] flex-1 flex flex-col gap-4 overflow-y-auto">
+    <div className="w-[800px] m-auto flex-1 flex flex-col items-center gap-4 overflow-y-auto">
       <h1 className="text-center text-4xl">{post.title}</h1>
 
       <div className="flex-1">
