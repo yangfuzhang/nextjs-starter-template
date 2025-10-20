@@ -24,7 +24,7 @@ to authenticated
 using (
   (( SELECT auth.jwt() ->> 'email'::text)) 
   IN (
-    'yangfuzhang0720@126.com'::text,
+    'yangfuzhang0720@126.com'::text
   )
 );
 
@@ -54,6 +54,6 @@ to authenticated
 using (
   (( SELECT auth.jwt() ->> 'email'::text)) 
   IN (
-    'yangfuzhang0720@126.com'::text,
+    'yangfuzhang0720@126.com'::text
   )
 );
