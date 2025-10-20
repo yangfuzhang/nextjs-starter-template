@@ -32,11 +32,11 @@ export const columns: ColumnDef<Post>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
-    header: "名称",
+    accessorKey: "title",
+    header: "标题",
     cell: ({ row }) => (
       <div className="flex flex-col gap-2">
-        {row.getValue("name")}
+        {row.getValue("title")}
         <div className="flex items-center gap-4">
           <Link
             href={`/admin/posts/edit/${row.original.document_id}?locale=${row.original.locale}`}

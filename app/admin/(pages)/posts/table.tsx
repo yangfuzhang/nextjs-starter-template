@@ -110,9 +110,9 @@ export function PostTable() {
       <div className="w-full flex items-center justify-between py-4 ">
         <Input
           placeholder="搜索文章..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
