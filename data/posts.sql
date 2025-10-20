@@ -33,17 +33,11 @@ on "public"."posts"
 as PERMISSIVE
 for INSERT
 to authenticated
-with check (
-  true
-);
-
-create policy "Enable read access for all users"
-on "public"."posts"
-as PERMISSIVE
-for SELECT
-to public
 using (
-  true
+  (( SELECT auth.jwt() ->> 'email'::text)) 
+  IN (
+    'yangfuzhang0720@126.com'::text
+  )
 );
 
 create policy "Enable update for users based on email"
@@ -56,4 +50,13 @@ using (
   IN (
     'yangfuzhang0720@126.com'::text
   )
+);
+
+create policy "Enable read access for all users"
+on "public"."posts"
+as PERMISSIVE
+for SELECT
+to public
+using (
+  true
 );
