@@ -6,6 +6,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { routing } from "@/i18n/routing";
+import { ThemeProvider } from "@/providers/theme-provider";
 import { Header } from "./components/header";
 import "@/styles/globals.css";
 
@@ -37,7 +38,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         {/* 谷歌统计代码 */}
         {process.env.NODE_ENV === "production" &&
@@ -65,12 +66,20 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider>
-          <div className="max-w-[1280px] mx-auto">
-            <Header />
-            {children}
-          </div>
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider>
+            <div className="max-w-[1280px] mx-auto">
+              <Header />
+              {children}
+            </div>
+          </NextIntlClientProvider>
+        </ThemeProvider>
+
         {process.env.VERCEL_ANALYTICS_ENABLED === "true" && <Analytics />}
         {process.env.VERCEL_SPEED_INSIGHTS_ENABLED === "true" && (
           <SpeedInsights />

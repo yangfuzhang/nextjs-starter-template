@@ -31,6 +31,17 @@ export function sanitizeSlug(slug: string) {
     .toLocaleLowerCase(); // 转换为小写
 }
 
+export function getIsDarkMode() {
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export function isEqual(obj1: any, obj2: any) {
   if (obj1 === obj2) return true;
   if (
