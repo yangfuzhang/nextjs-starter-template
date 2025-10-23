@@ -11,7 +11,7 @@ create table public.posts (
   seo_description text null default ''::text,
   locale text not null,
   created_at timestamp with time zone not null default now(),
-  updated_at timestamp without time zone not null default now(),
+  updated_at timestamp with time zone not null default now(),
   constraint posts_pkey primary key (id)
 ) TABLESPACE pg_default;
 
