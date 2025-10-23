@@ -16,19 +16,7 @@ create table public.posts (
 ) TABLESPACE pg_default;
 
 -- Enable row level security
-create policy "Enable delete for users based on user_email"
-on "public"."posts"
-as PERMISSIVE
-for DELETE
-to authenticated
-using (
-  (( SELECT auth.jwt() ->> 'email'::text)) 
-  IN (
-    'yangfuzhang0720@126.com'::text
-  )
-);
-
-create policy "Enable insert for authenticated users only"
+create policy "Enable insert for admin users only"
 on "public"."posts"
 as PERMISSIVE
 for INSERT
@@ -40,7 +28,19 @@ with check (
   )
 );
 
-create policy "Enable update for users based on email"
+create policy "Enable delete for admin users only"
+on "public"."posts"
+as PERMISSIVE
+for DELETE
+to authenticated
+using (
+  (( SELECT auth.jwt() ->> 'email'::text)) 
+  IN (
+    'yangfuzhang0720@126.com'::text
+  )
+);
+
+create policy "Enable update for admin users only"
 on "public"."posts"
 as PERMISSIVE
 for UPDATE
