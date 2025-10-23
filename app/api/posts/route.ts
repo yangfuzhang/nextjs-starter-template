@@ -54,14 +54,14 @@ export async function POST(request: Request) {
 
   const { slug, locale } = req.data;
   const supabase = await createClient();
-  const dbGame = await supabase
+  const dbItem = await supabase
     .from("posts")
     .select()
     .eq("slug", slug)
     .eq("locale", locale)
     .single();
 
-  if (dbGame.data) {
+  if (dbItem.data) {
     return NextResponse.json({ message: "文章已存在" }, { status: 400 });
   }
 
