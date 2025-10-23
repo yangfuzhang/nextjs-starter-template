@@ -54,6 +54,14 @@ export async function POST(request: Request) {
 
   const { slug, locale } = req.data;
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return NextResponse.json({ message: "unauthorized" }, { status: 401 });
+  }
+
   const dbItem = await supabase
     .from("posts")
     .select()
