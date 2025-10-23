@@ -33,7 +33,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { columns } from "./columes";
+import { columns } from "./columns";
 
 export function PostTable() {
   const [pagination, setPagination] = useState<PaginationState>({
