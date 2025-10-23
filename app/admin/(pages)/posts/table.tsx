@@ -159,7 +159,7 @@ export function PostTable() {
       </div>
       <div className="relative rounded-md border">
         {isFetching && (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="z-10 absolute inset-0 flex items-center justify-center">
             <LoaderCircle size="16" className="animate-spin" />
           </div>
         )}
