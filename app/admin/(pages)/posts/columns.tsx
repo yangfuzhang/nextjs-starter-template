@@ -1,4 +1,3 @@
-import * as React from "react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { Edit, Eye } from "lucide-react";
