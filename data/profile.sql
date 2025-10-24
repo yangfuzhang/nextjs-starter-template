@@ -4,15 +4,15 @@ CREATE TABLE public.profiles (
     name TEXT,
     email TEXT,
     image TEXT,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'UTC'),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'UTC')
+    created_at timestamp with time zone not null default now(),
+    updated_at timestamp with time zone not null default now(),
 );
 
 -- Create a function to update the updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.updated_at = (now() AT TIME ZONE 'UTC');
+    NEW.updated_at = now();
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -33,8 +33,8 @@ BEGIN
     NEW.email, 
     COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name'), 
     NEW.raw_user_meta_data->>'avatar_url',
-    (now() AT TIME ZONE 'UTC'), 
-    (now() AT TIME ZONE 'UTC')
+    now(), 
+    now()
   );
   RETURN NEW;
 END;
