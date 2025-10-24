@@ -60,3 +60,9 @@ to public
 using (
   true
 );
+
+-- Create a trigger to automatically update the updated_at column
+CREATE TRIGGER update_posts_updated_at
+BEFORE UPDATE ON public.posts
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at();
