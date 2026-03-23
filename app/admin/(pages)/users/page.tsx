@@ -1,10 +1,5 @@
-import { UserList } from "./list";
+import { UserTable } from "./table";
 
-export default async function Page() {
-  return (
-    <div className="p-4 flex flex-col gap-4">
-      <h1 className="text-xl font-medium">用户列表</h1>
-      <UserList />
-    </div>
-  );
+export default function Page() {
+  return <UserTable />;
 }
