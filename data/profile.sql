@@ -51,7 +51,7 @@ on "public"."profiles"
 to authenticated
 using (
   true
-);
+)
 with check (
   (( SELECT auth.jwt() ->> 'email'::text)) 
   IN (
