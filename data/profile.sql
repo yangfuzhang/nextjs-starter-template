@@ -45,11 +45,17 @@ CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
-
 -- Enable row level security
 create policy "Enable select for authenticated users only"
 on "public"."profiles"
 to authenticated
 using (
   true
+);
+with check (
+  (( SELECT auth.jwt() ->> 'email'::text)) 
+  IN (
+    'yangfuzhang0720@126.com'::text,
+    'xgh0722@gmail.com'::text
+  )
 );
