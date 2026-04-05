@@ -46,16 +46,17 @@ CREATE TRIGGER on_auth_user_created
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
 -- Enable row level security
-create policy "Enable select for authenticated users only"
+create policy "Users can access own profile or Admins can access all"
 on "public"."profiles"
+for all -- 涵盖 SELECT, INSERT, UPDATE, DELETE
 to authenticated
 using (
-  true
-)
-with check (
-  (( SELECT auth.jwt() ->> 'email'::text)) 
-  IN (
-    'yangfuzhang0720@126.com'::text,
-    'xgh0722@gmail.com'::text
+  -- 1. 用户只能访问 ID 匹配的行 (保护隐私)
+  auth.uid() = id 
+  OR 
+  -- 2. 或者该用户的 Email 在管理员名单中 (赋予权限)
+  (auth.jwt() ->> 'email') IN (
+    'yangfuzhang0720@126.com',
+    'xgh0722@gmail.com'
   )
 );
