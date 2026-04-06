@@ -4,6 +4,7 @@ CREATE TABLE public.profiles (
     name TEXT,
     email TEXT,
     image TEXT,
+    creem_customer_id TEXT,
     created_at timestamp with time zone not null default now(),
     updated_at timestamp with time zone not null default now()
 );
@@ -46,17 +47,13 @@ CREATE TRIGGER on_auth_user_created
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
 -- Enable row level security
-create policy "Users can access own profile or Admins can access all"
+alter table public.profiles enable row level security;
+
+create policy "Users see own, Admin sees all"
 on "public"."profiles"
-for all -- 涵盖 SELECT, INSERT, UPDATE, DELETE
 to authenticated
 using (
-  -- 1. 用户只能访问 ID 匹配的行 (保护隐私)
-  auth.uid() = id 
+  auth.uid() = id  -- 用户只能看自己的 ID 匹配的行
   OR 
-  -- 2. 或者该用户的 Email 在管理员名单中 (赋予权限)
-  (auth.jwt() ->> 'email') IN (
-    'yangfuzhang0720@126.com',
-    'xgh0722@gmail.com'
-  )
+  (auth.jwt() ->> 'email') = '2285511816@qq.com' -- 或者你是管理员
 );

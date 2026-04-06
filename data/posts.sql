@@ -16,6 +16,8 @@ create table public.posts (
 ) TABLESPACE pg_default;
 
 -- Enable row level security
+alter table public.profiles posts row level security;
+
 create policy "Enable insert for admin users only"
 on "public"."posts"
 as PERMISSIVE
@@ -24,7 +26,7 @@ to authenticated
 with check (
   (( SELECT auth.jwt() ->> 'email'::text)) 
   IN (
-    'yangfuzhang0720@126.com'::text
+    '2285511816@qq.com'::text
   )
 );
 
@@ -36,7 +38,7 @@ to authenticated
 using (
   (( SELECT auth.jwt() ->> 'email'::text)) 
   IN (
-    'yangfuzhang0720@126.com'::text
+    '2285511816@qq.com'::text
   )
 );
 
@@ -48,7 +50,7 @@ to authenticated
 using (
   (( SELECT auth.jwt() ->> 'email'::text)) 
   IN (
-    'yangfuzhang0720@126.com'::text
+    '2285511816@qq.com'::text
   )
 );
 
