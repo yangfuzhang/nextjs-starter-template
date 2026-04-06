@@ -16,7 +16,7 @@ create table public.posts (
 ) TABLESPACE pg_default;
 
 -- Enable row level security
-alter table public.posts row level security;
+alter table public.posts enable row level security;
 
 create policy "Enable insert for admin users only"
 on "public"."posts"
