@@ -28,15 +28,20 @@ EXECUTE FUNCTION update_updated_at();
 CREATE OR REPLACE FUNCTION public.handle_new_user() 
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, email, name, image, created_at, updated_at)
+  INSERT INTO public.profiles (id, email, name, image)
   VALUES (
     NEW.id, 
     NEW.email, 
-    COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name'), 
-    NEW.raw_user_meta_data->>'avatar_url',
-    now(), 
-    now()
-  );
+    COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', 'User'), 
+    NEW.raw_user_meta_data->>'avatar_url'
+  )
+  ON CONFLICT (id) DO UPDATE SET
+    -- 关键：只有当第三方提供新头像且不为空时才更新，否则保留原样
+    image = COALESCE(EXCLUDED.image, public.profiles.image),
+    email = EXCLUDED.email,
+    name = COALESCE(EXCLUDED.name, public.profiles.name),
+    updated_at = now();
+    
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
